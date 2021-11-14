@@ -1,4 +1,4 @@
-# burgurly (in development)
+# burgurly
 A Restaurant Web App
 ## Technologies
 
