@@ -1,0 +1,45 @@
+.sidebar__item {
+  width: 100%;
+  height: 8rem;
+  background-color: #1f1d2b;
+  border-radius: 1.25rem 0 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &--clicked {
+    background-color: #252836;
+  }
+  // @media screen and (max-width: 700px) {
+  //   height: 6rem;
+  // }
+  @media screen and (max-width: 700px) {
+    height: 6rem;
+    width: unset;
+    border-radius: 1.25rem 1.25rem 0 0;
+  }
+}
+.svg-wrapper {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  svg path {
+    fill: #ea7c69;
+  }
+  &--clicked {
+    background-color: #ea7c69;
+    svg path {
+      fill: #fff;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    width: 3rem;
+    height: 3rem;
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}

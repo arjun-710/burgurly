@@ -1,0 +1,134 @@
+@import '../../../styles/variables';
+@import '../../../styles/typography/typography';
+.customerlogin {
+  grid-column: 1/-1;
+  height: 100vh;
+  display: grid;
+  grid-template-columns:
+    [full-start sidebar-start] minmax(6rem, 10rem)
+    [sidebar-end content-start] repeat(
+      12,
+      [col-start] minmax(min-content, 10rem) [col-end]
+    )
+    [content-end] minmax(10rem, 1fr) [full-end];
+  position: relative;
+  @media screen and (max-width: 1200px) {
+    grid-template-columns:
+      [full-start sidebar-start] 8rem
+      [sidebar-end content-start] repeat(
+        12,
+        [col-start] minmax(min-content, 10rem) [col-end]
+      )
+      [content-end] minmax(10rem, 1fr) [full-end];
+    grid-auto-rows: min-content;
+  }
+  @media screen and (max-width: 700px) {
+    grid-template-columns:
+      [full-start sidebar-start] minmax(min-content, 10rem)
+      [ content-start] repeat(
+        12,
+        [col-start] minmax(min-content, 10rem) [col-end]
+      )
+      [content-end] minmax(6rem, 1fr) [sidebar-end full-end];
+  }
+  &__content {
+    height: 100vh;
+    grid-column: full-start / col-end 10;
+    display: grid;
+    background-image: url('./customer-background.jpg');
+    background-size: cover;
+    background-position-y: -50vh;
+    background-repeat: no-repeat;
+    grid-template-columns:
+      minmax(10rem, 1fr) repeat(7, minmax(min-content, 10rem))
+      minmax(10rem, 1fr);
+    grid-auto-rows: min-content;
+    @media screen and (max-width: 1500px) {
+      grid-column: full-start / col-end 9;
+      background-position-y: -25vh;
+    }
+    @media screen and (max-width: 1000px) {
+      background-position-y: unset;
+      grid-column: full-start / col-end 7;
+    }
+    @media screen and (max-width: 700px) {
+      grid-column: full-start / full-end;
+      background-size: cover;
+    }
+  }
+  &__details {
+    grid-column: col-start 11 / full-end;
+    display: flex;
+    background-color: $background-color-dark;
+    color: $white;
+    padding: 2rem;
+    font-family: 'Barlow';
+    font-weight: 600;
+    z-index: 10;
+    flex-direction: column;
+    padding-top: 35%;
+    @media screen and (max-width: 1500px) {
+      grid-column: 11 / full-end;
+    }
+    @media screen and (max-width: 1000px) {
+      grid-column: 9 / full-end;
+    }
+    @media screen and (max-width: 700px) {
+      grid-column: full-start / full-end;
+      position: absolute;
+      background-color: rgba($background-color-light, 0.55);
+      padding-left: 15%;
+      padding-right: 15%;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+    & > * {
+      margin: 1rem 0;
+    }
+    & > *:nth-child(2) {
+      margin-top: 4rem !important;
+      text-align: center;
+    }
+    & > *:nth-child(3) {
+      cursor: pointer;
+      text-align: center;
+    }
+    &--inputContainer {
+      padding: 0 2rem;
+      width: 100%;
+      height: 4.6rem;
+      display: flex;
+      align-items: center;
+      background-color: rgba(#000, 0.6);
+      border-radius: 1rem;
+      user-select: none;
+      input {
+        font-size: 1.5rem;
+        width: 100%;
+        border: 0;
+        outline: none;
+        background-color: transparent;
+        color: $white;
+      }
+    }
+    &-login {
+      margin-top: 2rem !important;
+      background-color: rgba(#000, 0.6);
+      padding: 1.25rem 2rem;
+      width: 35%;
+      margin: 0 auto;
+      text-align: center;
+      border-radius: 1rem;
+      &:hover {
+        background-color: $primary-color;
+      }
+    }
+
+    &-partner {
+      padding-top: 25%;
+      user-select: none;
+    }
+  }
+}
