@@ -84,7 +84,7 @@ const MenuAddForm = ({handleClose,currentSection}) => {
         </div>
         <div className="menuAddForm__inputdetails-upload--text">Dish Preview</div>
 
-        <MenuCard formCalled={true} src={image} title={name} price={price} stock={stock}/>
+        <MenuCard formCalled={true} src={image} title={name} price={price} stock={stock} nodelete={true}/>
         <div className="menuAddForm__buttons">
           <div onClick={ClearForm}><Button type="ghost" config="discard" color='#ea7c69'>Discard Changes</Button></div>
           <div onClick={submit}><Button type="primary" config="save">Save</Button></div>

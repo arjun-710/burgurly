@@ -10,24 +10,42 @@ import { setdishsection } from './redux/Home/home.actions';
 import Dashboard from './pages/Dashboard/Dashboard';
 import CustomerLogin from './pages/Login/Customer/CustomerLogin';
 import RestaurantLogin from './pages/Login/Restaurant/RestaurantLogin.jsx';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import Settings from './pages/Settings/Settings';
 import HomePartner from './pages/Home/HomePartner/HomePartner';
 import HomeCustomer from './pages/Home/HomeCustomer/HomeCustomer';
+import { getRestaurantDetails } from './redux/restaurant/restaurant.actions';
 function App() {
   const dispatch = useDispatch();
   const user=useSelector((state)=>state.auth?.user);
   const type=user?.type;
+  const id=user?._id;
+  const currentPartnerInfo = useSelector((state)=> state.restaurants.resInfo);
+  
   useEffect(() => {
     dispatch(fetchUser());
     dispatch(setCurrentPage("Home"));  
     if(type==="Partner"){
+      dispatch(getRestaurantDetails(id));
       dispatch(setdishsection("MainCourse"));
     }
     return () => {
       
     }
-  }, [dispatch,type])
+  }, [dispatch,type,id])
+
+  useEffect(() => {
+    if(type!==null && type==="Partner"){
+      console.log(currentPartnerInfo);
+      if(currentPartnerInfo && (currentPartnerInfo.RestaurantAddress==null || currentPartnerInfo.RestaurantName==null))
+    {
+      dispatch(setCurrentPage("Settings"))
+    }
+    }
+    return () => {
+      
+    }
+  }, [currentPartnerInfo,dispatch,type])
 
   const TypeCustomer=()=>{
     return(
@@ -69,9 +87,19 @@ function App() {
   }
 
   const currentPage=useSelector((state)=>state.page.page);
+  
+  console.log(user?.type);
   return (
     <div className="app">
+      {!user && <Redirect to='/'/>}
       <Switch>
+        {
+          user?.type==="Customer" && <Route exact path='/' render={()=>user ? <Redirect to='/home'/> : <Redirect to='/'/>} />
+        }
+        {
+          user?.type==="Partner" && <Route exact path='/' render={()=>user?<Redirect to='/restaurant/partner'/>: <Redirect to='/restaurant'/>} />
+        }
+      
       <Route exact path='/' component={CustomerLogin}/>
       <Route exact path='/restaurant' component={RestaurantLogin}/>
       {user?.type==='Customer' && <TypeCustomer/>}
@@ -80,7 +108,7 @@ function App() {
           {
             currentPage!=='Login' && <Sidebar/>
           }
-          <div className="app__content">
+          <div className="app__content">            
           {currentPage==="Home" && 
               <>
               <Header page="Home"/>

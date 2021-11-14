@@ -27,8 +27,6 @@ const StyledItem=styled.div`
 const HomeCustomer = () => {
     const dispatch = useDispatch();
     const currentSection=useSelector((state)=>state.dish.dishsection);
-    // const dishes=useSelector((state)=>state.dish.dish);
-    // const user=useSelector((state)=>state.auth?.user);
     const restaurants=useSelector((state)=>state.restaurants);
     const dishes=restaurants?.dishes;
     useEffect(() => {
@@ -40,7 +38,6 @@ const HomeCustomer = () => {
 
     const fetchMenu=({id,address,name,location})=>{
         dispatch(CurrentRestaurant({id,address,name,location}));
-        console.log("restaurant ID: ",id);
         dispatch(setdishsection("MainCourse"));
         dispatch(getMenu({id,menuName:'MainCourse'}));
     }
@@ -60,8 +57,8 @@ const HomeCustomer = () => {
             <div className="homeCustomer__overflowfix">
                 <div className="homeCustomer__dishes">
                     {currentSection==null ? restaurants && restaurants?.restur?.map((restaurant,index)=>{
-                        const {RestaurantAddress,RestaurantName,location,_id}=restaurant;
-                        return <RestaurantCard fetchMenu={fetchMenu} key={_id} id={_id} address={RestaurantAddress} name={RestaurantName} location={location}/>
+                        const {RestaurantAddress,RestaurantName,location,_id,image}=restaurant;
+                        return <RestaurantCard fetchMenu={fetchMenu} key={_id} id={_id} image={image} address={RestaurantAddress} name={RestaurantName} location={location}/>
                     })
                     :
                     dishes.map((dish,index)=>{
@@ -70,6 +67,7 @@ const HomeCustomer = () => {
                                 return <Dishes key={index} dish={receipe}/>
                             })
                         }
+                        else return null
                     })
                     
                 }

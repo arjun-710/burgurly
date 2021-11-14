@@ -1,7 +1,8 @@
 const initialState={
   restur:[],
   dishes:[],
-  current:null
+  current:null,
+  resInfo:null
 }
 
 const restaurantReducer=(state=initialState,action)=>{
@@ -12,6 +13,8 @@ const restaurantReducer=(state=initialState,action)=>{
           return {...state,dishes:action.payload}
       case 'CURRENT_RESTAURANT':
         return {...state,current:action.payload}
+      case 'GET_RESTAURANT_INFO':
+        return {...state,resInfo:action.payload}
       default:
           return state
   }

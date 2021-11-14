@@ -3,9 +3,7 @@ import './Dishes.scss'
 import { useDispatch } from 'react-redux'
 import { addCartItem } from '../../redux/Order/order.action'
 const Dishes = ({dish}) => {
-    console.log(dish);
     const dispatch = useDispatch();
-
     return (
         <div className="dishes" onClick={()=>dispatch(addCartItem(dish))}>
             <div className="dishes__image"><img src={dish.image} alt={dish.title} /></div>

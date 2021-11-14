@@ -7,12 +7,21 @@ const Menu=mongoose.model('menus');
 module.exports=(app)=>{
     //partner
         app.post('/api/partner/detail',(req,res)=>{
-        const {RestaurantName,RestaurantAddress,location}=req.body;
+        const {RestaurantName,RestaurantAddress,location,image}=req.body;
         Restaurant.updateOne({_id:req.user.id},{
           RestaurantName,
           RestaurantAddress,
-          location
+          location,
+          image
         })
+        .then((response)=>{
+          res.send(response);
+        })
+        .catch((err)=>console.log(err))
+    })
+        app.post('/api/partner/restaurant/info',(req,res)=>{
+        const {id}=req.body;
+        Restaurant.findOne({_id:id})
         .then((response)=>{
           res.send(response);
         })

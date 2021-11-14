@@ -9,6 +9,7 @@ import styled,{css} from 'styled-components';
 const Header = ({page}) => {
     const [inputdata,setinputdata]=useState('');
     const time= moment().format('dddd, DD MMMM YYYY');  
+    const current= useSelector((state=>state.restaurants.current));
     const dispatch = useDispatch();
     useEffect(() => {
         const timer=setTimeout(() => {
@@ -73,7 +74,7 @@ const Header = ({page}) => {
         <div className='header'>
             <StyledFlash authChanged={authChanged.bool} className="header__flash">{authChanged.authstate}</StyledFlash>
             <div className="header__left">
-                <div className="header__left-title heading-1">{page==="Home" ? "Jaegar Resto" : page}</div>
+                <div className="header__left-title heading-1">{page==="Home" ? (current!==null ? current.name: "Burgurly" ) : page}</div>
                 <div className="header__left-time">{time}</div>
             </div>
             {page==="Home" && 

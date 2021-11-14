@@ -8,7 +8,6 @@ import axios from 'axios';
 // import { useDispatch } from 'react-redux';
 const MenuEditForm = ({handleClose,currentSection,src,title,price,stock}) => {
   // const dispatch = useDispatch();
-  const [name,setname] = useState(title);
   const [Price,setPrice] = useState(price);
   const [bowl,setBowl] = useState(stock);
   const [image,setImage]=useState(src);
@@ -46,7 +45,6 @@ const MenuEditForm = ({handleClose,currentSection,src,title,price,stock}) => {
   }
 
   const ClearForm=()=>{
-    setname('');
     setPrice(0);
     setBowl(0);
     setImage(null);
@@ -54,7 +52,7 @@ const MenuEditForm = ({handleClose,currentSection,src,title,price,stock}) => {
   const submit=()=>{
     axios.post('/api/partner/menu/edit',{
       currentSection:currentSection,
-      name:name,
+      name:title,
       price:Price,
       stock:bowl,
       image:image
@@ -66,7 +64,8 @@ const MenuEditForm = ({handleClose,currentSection,src,title,price,stock}) => {
   return (
     <>
       <div className="menuEditForm">
-        <div className="menuEditForm__inputdetails--inputContainer"><input type='text' placeholder='Enter Name of the dish' value={name} onChange={(e)=>setname(e.target.value)}/></div>
+        <div className="menuEditForm__inputdetails--inputContainer">{title}</div>
+        <div>Name is a fixed property</div>
         <div className="menuEditForm__inputdetails--inputContainer"><input type='number' placeholder='Enter Price' value={Price} onChange={(e)=>setPrice(e.target.value)}/></div>
         <div className="menuEditForm__inputdetails--inputContainer"><input type='number' placeholder='Enter Stock' value={bowl} onChange={(e)=>setBowl(e.target.value)}/></div>
         <div className="menuEditForm__inputdetails-upload">
@@ -81,7 +80,7 @@ const MenuEditForm = ({handleClose,currentSection,src,title,price,stock}) => {
         </div>
         <div className="menuEditForm__inputdetails-upload--text">Dish Preview</div>
 
-        <MenuCard formCalled={true} src={image} title={name} price={Price} stock={bowl}/>
+        <MenuCard formCalled={true} src={image} title={title} price={Price} stock={bowl} nodelete={true}/>
         <div className="menuEditForm__buttons">
           <div onClick={ClearForm}><Button type="ghost" config="discard" color='#ea7c69'>Discard Changes</Button></div>
           <div onClick={submit}><Button type="primary" config="save">Save</Button></div>

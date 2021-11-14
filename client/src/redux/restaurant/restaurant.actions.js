@@ -22,3 +22,12 @@ export const getMenu=(prop)=>{
         dispatch({type:'GET_MENU',payload:data})
     }
 }
+
+export const getRestaurantDetails=(id)=>{
+    return async (dispatch)=>{
+        const {data}=await axios.post('/api/partner/restaurant/info',{
+            id
+        });
+        dispatch({type:'GET_RESTAURANT_INFO',payload:data})
+    }
+}

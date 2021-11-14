@@ -1,4 +1,5 @@
 export const addCartItem=(item)=>{
+    console.log(item);
     return {
         type:"ADD_CART_ITEM",
         payload:item

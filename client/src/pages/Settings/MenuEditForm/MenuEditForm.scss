@@ -8,8 +8,19 @@
   align-items: center;
   padding: 0.5rem 2rem;
   padding-bottom: 2rem;
+  & > *:first-child {
+    color: $white;
+  }
   & > * {
     margin-top: 2rem;
+  }
+  & > *:nth-child(2) {
+    margin: 0;
+    padding-top: 0.5rem;
+    width: 70%;
+    padding-left: 1rem;
+    color: rgba(red, 0.65);
+    font-size: 1.25rem;
   }
   &__inputdetails {
     justify-content: center;

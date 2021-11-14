@@ -15,18 +15,30 @@ import { fetchDishes } from '../../redux/dishes/dishes.action';
 import axios from 'axios';
 
 const Settings = () => {
+  const currentPartnerInfo = useSelector((state)=> state.restaurants.resInfo);
   const [name,setName]=useState('');
   const [address,setAddress]=useState('');
-  const [latitude,setLatitude]=useState('');
-  const [longitude,setLongitude]=useState('');
+  const [latitude,setLatitude]=useState();
+  const [longitude,setLongitude]=useState();
   const [side,setSide]=useState('info');
   const [open,setopen]=useState(false);
+  const [image,setImage]=useState();
   const category=useSelector((state)=>state.category?.dishes);
+
+  useEffect(() => {
+    setName(currentPartnerInfo?.RestaurantName);
+    setAddress(currentPartnerInfo?.RestaurantAddress);
+    setLatitude(currentPartnerInfo?.location.coordinates[0]);
+    setLongitude(currentPartnerInfo?.location.coordinates[1]);
+    setImage(currentPartnerInfo?.image);
+    return () => {
+      
+    }
+  }, [currentPartnerInfo])
   const dispatch = useDispatch();
 
   const [currentSection,setCurrentSection]=useState('MainCourse');
-
-
+  
   useEffect(() => {
     //remove this fectch User
     dispatch(fetchUser());
@@ -62,6 +74,7 @@ const PseudoClass=css`
     setAddress('');
     setLatitude('');
     setLongitude('');
+    setImage();
   }
 
   const FetchLocation=()=>{
@@ -73,14 +86,15 @@ const PseudoClass=css`
     });
   }
   const Submit=()=>{
-    if(name!=='' && address!=='' && latitude!=='' && longitude!=='')
+    if(name!=='' && address!=='' && latitude!=='' && longitude!=='' && image!==null)
     axios.post('/api/partner/detail',{
         RestaurantName:name,
       RestaurantAddress:address,
       location:{
         type:'Point',
         coordinates:[+latitude,+longitude]
-      }
+      },
+      image:image
     })
     .then((res)=>{
       console.log(res);
@@ -106,6 +120,38 @@ const PseudoClass=css`
 
   }
 
+  const getBase64 = file => {
+    return new Promise(resolve => {
+      let fileInfo;
+      let baseURL = "";
+      // Make new FileReader
+      let reader = new FileReader();
+
+      // Convert the file to base64 text
+      reader.readAsDataURL(file);
+
+      // on reader load somthing...
+      reader.onload = () => {
+        // Make a fileInfo Object
+        console.log("Called", reader);
+        baseURL = reader.result;
+        console.log(baseURL);
+        resolve(baseURL);
+      };
+      console.log(fileInfo);
+    });
+  };
+
+  const handleChange=(e)=>{
+    console.log(e.target.files[0]);
+    getBase64(e.target.files[0])
+      .then(result => {
+        setImage(result)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   return (
     <>
       <div className="settings">
@@ -125,7 +171,7 @@ const PseudoClass=css`
               <Option/>
             </div>
             <div className="settings__Card-detail">
-            <div className="settings__Card-detail--heading">Upload Images</div>
+            <div className="settings__Card-detail--heading">Manage Menu</div>
             <div className="settings__Card-detail--subHeading">Menu, restaurant, food images</div>
             </div>
           </div>
@@ -142,6 +188,22 @@ const PseudoClass=css`
               </div>
               <div className="settings__form-details-location-auto" onClick={FetchLocation}>Fetch current Location</div>
             </div>
+            <div className="settings__form-upload">
+            <label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  Upload Image
+                </label>
+            </div>
+            <div className="settings__form-card">
+              <div className="settings__form-card--imageContainer">
+                {image && <img src={image} alt="restaurant" />}
+                
+              </div>
+            </div>
             <div className="settings__buttons">
               <div onClick={Discard}><Button type="ghost" config="discard" color='#ea7c69'>Discard Changes</Button></div>
               <div onClick={Submit}><Button type="primary" config="save">Save Changes</Button></div>
@@ -150,8 +212,8 @@ const PseudoClass=css`
           }
           {
             side==='upload' && <>
-              <div className="settings__form-heading">Restaurant Menu</div>
-               <div className="settings__form-upload">
+              <div className="settings__restaurant">Restaurant Menu</div>
+               <div className="settings__restaurant-details">
                 <StyledItem section={currentSection} name="MainCourse" onClick={()=>setCurrentSection("MainCourse")}>Main Course</StyledItem>
                 <StyledItem section={currentSection} name="sideDish" onClick={()=>setCurrentSection("sideDish")}>Side Dish</StyledItem>
                 <StyledItem section={currentSection} name="soup" onClick={()=>setCurrentSection("soup")}>Soup</StyledItem>
@@ -167,7 +229,7 @@ const PseudoClass=css`
                 {category?.map((dishes)=>{
                   return dishes?.dishes?.map((dish)=>{
                     const {name,image,price,stock,_id}=dish;
-                  return <MenuCard title={name} id={_id} src={image} price={price} stock={stock} currentSection={currentSection} ondelete={ondelete}/>
+                  return <MenuCard key={_id} title={name} id={_id} src={image} price={price} stock={stock} currentSection={currentSection} ondelete={ondelete}/>
                   })
                 })}
                 

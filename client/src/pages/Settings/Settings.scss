@@ -128,7 +128,74 @@
         }
       }
     }
+    &-upload {
+      margin-bottom: 2rem;
+      margin-top: 3rem;
+      label {
+        color: $white;
+        background-color: $primary-color;
+        padding: 1rem 1.5rem;
+        border-radius: 1.25rem;
+        input {
+          display: none;
+        }
+      }
+      &--text {
+        margin-top: 1rem;
+        color: $text-light;
+      }
+    }
+    &-card {
+      margin: 0 auto;
+      width: 15rem;
+      height: 17rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: $background-color-dark;
+      border-radius: 2rem;
+      &--imageContainer {
+        width: 15rem;
+        height: 15rem;
+        display: flex;
+        padding: 2rem;
+        padding-bottom: 1rem;
+        border-radius: 2rem;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 100%;
+          border-radius: 2rem;
+          height: 100%;
+        }
+      }
+    }
   }
+  &__restaurant {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 500;
+    &-details {
+      grid-column: home-start / home-end;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      padding-bottom: 1rem;
+      border-bottom: 1.5px solid rgba($text-light, 0.3);
+      & > *:first-child {
+        margin-right: 0.5rem;
+      }
+      @media screen and (max-width: 1000px) {
+        grid-template-columns: repeat(6, 1fr);
+        grid-column-gap: 0.5rem;
+      }
+      @media screen and (max-width: 700px) {
+        grid-template-columns: repeat(6, minmax(max-content, 1fr));
+        font-size: 1.25rem;
+        grid-column-gap: 2rem;
+      }
+    }
+  }
+
   &__buttons {
     display: flex;
     align-items: center;
@@ -147,22 +214,10 @@
     }
   }
   &__form-upload {
-    grid-column: home-start / home-end;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    padding-bottom: 1rem;
-    border-bottom: 1.5px solid rgba($text-light, 0.3);
+    display: flex;
+    justify-content: center;
     & > *:first-child {
       margin-right: 0.5rem;
-    }
-    @media screen and (max-width: 1000px) {
-      grid-template-columns: repeat(6, 1fr);
-      grid-column-gap: 0.5rem;
-    }
-    @media screen and (max-width: 700px) {
-      grid-template-columns: repeat(6, minmax(max-content, 1fr));
-      font-size: 1.25rem;
-      grid-column-gap: 2rem;
     }
   }
 }
