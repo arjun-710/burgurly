@@ -1,0 +1,68 @@
+@import "../../../styles/variables";
+.header {
+  display: grid;
+  grid-column: 1/-1;
+  background-color: #252836;
+  color: #fff;
+  height: 9rem;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 2.5rem;
+  position: relative;
+  &__left {
+    margin-right: auto;
+
+    &-time {
+      color: $text-light;
+      font-size: 1.25rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__inputContainer {
+    background-color: $form-bg;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    position: relative;
+    &-flat {
+      border-radius: 1rem 1rem 0 0;
+    }
+    &-suggestions {
+      background-color: $background-color-dark;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      padding: 1rem;
+      & > *:not(:last-child) {
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid $background-color-light;
+      }
+    }
+    input {
+      margin-left: 0.25rem;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: $text-light;
+      font-size: 1.25rem;
+    }
+    svg {
+      width: 1.75rem;
+      height: 1.75rem;
+      margin-right: 0.35rem;
+    }
+    svg rect {
+      fill: $white;
+    }
+  }
+
+  @media screen and (max-width: 1500px) {
+    grid-column: 1/-1;
+  }
+  @media screen and (max-width: 700px) {
+    grid-column: 1/-1;
+  }
+}

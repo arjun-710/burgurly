@@ -1,0 +1,21 @@
+@import '../../../styles/variables';
+
+.button--ordertype {
+  height: 3.5rem;
+}
+.button--orderpayment {
+  padding: 1rem;
+}
+.button--partner {
+  padding: 1.33rem;
+}
+.button--save {
+  padding: 1.33rem;
+  color: $white;
+}
+.button--discard {
+  color: $white;
+}
+.button-icon {
+  // margin-right: 1rem;
+}

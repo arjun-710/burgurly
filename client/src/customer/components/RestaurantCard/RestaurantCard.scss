@@ -1,0 +1,53 @@
+@import '../../../styles/variables';
+.restaurantCard {
+  width: 15rem;
+  height: 18rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $background-color-dark;
+  border-radius: 2rem;
+  cursor: pointer;
+  &__img {
+    width: 12rem;
+    height: 12rem;
+    display: flex;
+    padding: 2rem;
+    padding-bottom: 1rem;
+    border-radius: 2rem;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 100%;
+      border-radius: 2rem;
+      height: 100%;
+    }
+  }
+  &__details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    &-name {
+      display: flex;
+      justify-content: center;
+    }
+    &-Info {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &--location {
+      }
+      &--bill {
+        display: flex;
+        align-items: center;
+        span {
+          padding-top: 0.25rem;
+          font-size: 1rem;
+          color: $text-light;
+          padding-right: 0.5rem;
+        }
+      }
+    }
+  }
+}

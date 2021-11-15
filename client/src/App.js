@@ -1,51 +1,32 @@
 import './App.scss';
-import Header from './components/Header/Header';
-import Sidebar from './pages/Sidebar/Sidebar';
-import Order from './pages/Order/Order.jsx';
+import Header from './global/pages/Header/Header';
+import Sidebar from './global/pages/Sidebar/Sidebar.jsx';
+import Order from './global/pages/Order/Order.jsx';
 import {useDispatch, useSelector} from 'react-redux'
 import { useEffect } from 'react';
-import { fetchUser } from './redux/auth/auth.action';
-import { setCurrentPage } from './redux/currentpage/currentPage.action';
-import { setdishsection } from './redux/Home/home.actions';
-import Dashboard from './pages/Dashboard/Dashboard';
-import CustomerLogin from './pages/Login/Customer/CustomerLogin';
-import RestaurantLogin from './pages/Login/Restaurant/RestaurantLogin.jsx';
+import { fetchUser } from './global/redux/auth/auth.action';
+import { setCurrentPage } from './global/redux/currentpage/currentPage.action';
+import Dashboard from './global/pages/Dashboard/Dashboard.jsx';
+import CustomerLogin from './customer/pages/Login/Login';
+import RestaurantLogin from './restaurant/pages/Login/Login';
 import { Redirect, Route, Switch } from 'react-router';
-import Settings from './pages/Settings/Settings';
-import HomePartner from './pages/Home/HomePartner/HomePartner';
-import HomeCustomer from './pages/Home/HomeCustomer/HomeCustomer';
-import { getRestaurantDetails } from './redux/restaurant/restaurant.actions';
+import Settings from './restaurant/pages/Settings/Settings.jsx';
+import HomePartner from './restaurant/pages/Home/Home.jsx';
+import HomeCustomer from './customer/pages/Home/Home.jsx';
 function App() {
   const dispatch = useDispatch();
   const user=useSelector((state)=>state.auth?.user);
-  const type=user?.type;
-  const id=user?._id;
-  const currentPartnerInfo = useSelector((state)=> state.restaurants.resInfo);
-  
+  const currentPartnerInfo = useSelector((state)=> state.restaurants?.resInfo);
+ 
   useEffect(() => {
-    dispatch(fetchUser());
+    if(user==null){
+      dispatch(fetchUser());
+    }
     dispatch(setCurrentPage("Home"));  
-    if(type==="Partner"){
-      dispatch(getRestaurantDetails(id));
-      dispatch(setdishsection("MainCourse"));
-    }
     return () => {
       
     }
-  }, [dispatch,type,id])
-
-  useEffect(() => {
-    if(type!==null && type==="Partner"){
-      console.log(currentPartnerInfo);
-      if(currentPartnerInfo && (currentPartnerInfo.RestaurantAddress==null || currentPartnerInfo.RestaurantName==null))
-    {
-      dispatch(setCurrentPage("Settings"))
-    }
-    }
-    return () => {
-      
-    }
-  }, [currentPartnerInfo,dispatch,type])
+  }, [dispatch,user])
 
   const TypeCustomer=()=>{
     return(
@@ -87,8 +68,6 @@ function App() {
   }
 
   const currentPage=useSelector((state)=>state.page.page);
-  
-  console.log(user?.type);
   return (
     <div className="app">
       {!user && <Redirect to='/'/>}
@@ -124,7 +103,7 @@ function App() {
         {currentPage==="Settings" && 
           <>
           <Header page="Settings"/>
-          <Settings/>
+          <Settings currentPartnerInfo={currentPartnerInfo}/>
           </>
         }
           </div>

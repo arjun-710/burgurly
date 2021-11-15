@@ -30,9 +30,7 @@ module.exports=(app)=>{
 
       app.post('/api/partner/restaurants/menu',(req,res)=>{
         const {id,menuName}=req.body;
-        console.log(req.body);
         Restaurant.find({_id:id,"_menu.name":menuName}).then((resExists)=>{
-          console.log(resExists);
           resExists[0]?._menu.forEach(element => {
             if(element.name===menuName){
               Menu.find({_id:element._id}).then((dishes)=>{
@@ -55,9 +53,7 @@ module.exports=(app)=>{
 
     app.post('/api/partner/restaurants',(req,res)=>{
       const {restaurantId,menuId}=req.body;
-      console.log(req.body);
       Restaurant.find({_id:restaurantId}).then((response)=>{
-        console.log(response);
         res.send(response);
       })
       .catch((err)=>{
@@ -137,7 +133,6 @@ module.exports=(app)=>{
               {new: true, useFindAndModify: false}, (err, result) => {
               // Rest of the action goes here
               res.send(result);
-              console.log(result);
               console.log(err);
             })
           }
@@ -247,7 +242,6 @@ module.exports=(app)=>{
 
     app.post('/api/partner/menu/edit',async(req,res)=>{
       const {currentSection,name,price,stock,image}=req.body;
-      console.log(req.body);
       const menu=await Menu.updateOne({_user:req.user.id, dishes: { $elemMatch: {name: name} }},
         {'$set': {
           'dishes.$.name': name,
@@ -256,7 +250,6 @@ module.exports=(app)=>{
           'dishes.$.image': image,
         }}
       ,(err,response)=>{
-          console.log(response);
           res.send(response);
           console.log(err);
         }) 
