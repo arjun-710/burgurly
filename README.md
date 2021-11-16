@@ -1,5 +1,8 @@
 # burgurly
 A Restaurant Web App
+
+Deployed => <a href="https://burgurly.azurewebsites.net/">Website link</a>
+
 ## Technologies
 
 [![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB&link=https://burgurly.azurewebsites.net/)](https://burgurly.azurewebsites.net/) 
